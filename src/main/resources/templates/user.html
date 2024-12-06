@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Users</title>
+    <style>
+        body {
+            margin-top: 20px;
+        }
+        .bold-white-text {
+            font-weight: bold;
+            color: white;
+        }
+        .header {
+            background-color: black;
+            color: white;
+            padding: 10px;
+            height: 50px;
+            text-align: right;
+        }
+        .header-left {
+            float: left;
+            color: white;
+            padding-left: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-top: 2px solid #ccc;
+            border-bottom: none;
+            border-left: none;
+            border-right: none;
+            margin-top: 1px;
+            background-color: white;
+            padding: 20px;
+        }
+
+        table th {
+            background-color: white;
+            border: 1px solid transparent;
+            padding: 30px;
+            text-align: left;
+        }
+
+        table td {
+            border: 1px solid transparent;
+            padding: 30px;
+            text-align: left;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .container-xl {
+            display: grid;
+            grid-template-columns: 275px 1fr;
+            grid-gap: 10px;
+            height: calc(100vh - 50px);
+        }
+
+        .sidebar {
+
+            padding: 10px;
+        }
+        .admin-panel-container h1 {
+            margin-bottom: 1cm;
+        }
+        .main-content {
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+
+        .sidebar ul{
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: black;
+            display: block;
+            padding: 5px 10px;
+            margin-bottom: 5px;
+        }
+
+        .user-gran {
+            display: inline-block;
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px 5px 0 0;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="header-left">
+        <span class="bold-white-text" th:text="${#authentication.principal.username}"></span>
+        <span> with roles: </span>
+        <span th:text="${#strings.listJoin(#authentication.getAuthorities(), ', ')}"></span>
+    </div>
+    <a href="#" th:href="@{/logout}" style="color: white; text-decoration: none;">Logout</a>
+</div>
+
+<div class="container-xl">
+    <div class="sidebar">
+        <ul>
+            <li class="bg-primary text-white"><a th:href="@{/user}" href="/user" class="text-white">User</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="admin-panel-container">
+            <h1>User information-page</h1>
+        </div>
+        <div class="user-gran w-100 p-3">About User</div>
+        <table  class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+                <th>Roles</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${user}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:text="${user.age}"></td>
+                <td th:text="${#strings.listJoin(user.getRoles(), ', ')}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+</body>
+</html>
